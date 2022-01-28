@@ -126,7 +126,7 @@ Relevant bits to add to your `package.json`:
   },
   "scripts": {
     "start": "concurrently -k \"BROWSER=none react-scripts start\" \"build-electron -d\" \"wait-on public/.build-electron-done http://localhost:3000 && electron .\"",
-    "build": "react-scripts build && build-electron",
+    "build": "build-electron && react-scripts build",
     "postinstall": "electron-builder install-app-deps"
   }
 ```

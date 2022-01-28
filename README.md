@@ -1,4 +1,4 @@
-# build-electron
+# build-electron [![Test](https://github.com/mifi/build-electron/actions/workflows/test.yml/badge.svg)](https://github.com/mifi/build-electron/actions/workflows/test.yml)
 
 Use ES modules in Electron now!
 

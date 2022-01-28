@@ -2,8 +2,7 @@
 import webpack from 'webpack';
 import meow from 'meow';
 import assert from 'assert';
-import { unlink, writeFile, access } from 'fs/promises';
-import { constants } from 'fs';
+import { unlink, writeFile, mkdir } from 'fs/promises';
 import { isAbsolute, join } from 'path';
 
 const cli = meow(`
@@ -23,8 +22,9 @@ const {
   config: configPath = join(projectRoot, 'build-electron.config.js'),
 } = cli.flags;
 
+const resolvePath = (path) => isAbsolute(path) ? path : join(projectRoot, path)
 
-const config = (await import(configPath)).default;
+const config = (await import(resolvePath(configPath))).default;
 
 const {
   mainEntry,
@@ -44,8 +44,6 @@ assert(mainEntry || preloadEntry);
 assert(outDir);
 assert(mainTarget);
 assert(preloadTarget);
-
-await access(outDir, constants.W_OK);
 
 const doneSignalFilePath = join(outDir, '.build-electron-done');
 
@@ -95,8 +93,6 @@ export const getPreloadConfig = ({ entry, extraEntries, target }) => ({
   ...customPreloadConfig,
 });
 
-const resolvePath = (path) => isAbsolute(path) ? path : join(projectRoot, path)
-
 const main = mainEntry && webpack(getMainConfig({
   entry: resolvePath(mainEntry),
   target: mainTarget,
@@ -108,6 +104,13 @@ const preload = preloadEntry && webpack(getPreloadConfig({
   target: preloadTarget,
   extraEntries: preloadExtraEntries && Object.fromEntries(Object.entries(preloadExtraEntries).map(([key, value]) => ([key, resolvePath(value)]))),
 }));
+
+// mkdir -p
+try {
+  await mkdir(outDir);
+} catch (err) {
+  if (err.code !== 'EEXIST') throw err;
+}
 
 await unlink(doneSignalFilePath).catch(() => {});
 

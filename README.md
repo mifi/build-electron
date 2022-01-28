@@ -1,5 +1,7 @@
 # build-electron
 
+Use ES modules in Electron now!
+
 `build-electron` is a simple build tool for **main** and **preload** code of your Electron app, so you don't have to setup a webpack build system yourself. The aim is to make it easier to get started building Electron apps, like it used to be.
 
 ## Background

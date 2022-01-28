@@ -17,7 +17,54 @@ Because [Electron does not support ES Modules](https://github.com/electron/elect
 
 ## How to use
 
-Note that this project provides building of **Node.js code only** (main, preload) - not renderer code due to there being so many different languages and frameworks for that, and there are already excellent tools for building those. For React based Electron apps, I recommend pairing with [Create React App (CRA)](https://github.com/facebook/create-react-app).
+Note that this project provides **Node.js code building only** (main, preload) - not renderer code due to there being so many different languages and frameworks for that, and there are already excellent tools for building those. For React based Electron apps, I recommend pairing with [Create React App (CRA)](https://github.com/facebook/create-react-app).
+
+```bash
+yarn add -D build-electron concurrently wait-on
+```
+
+Put your Electron main ESM source code in `src/main/index.js` and preload source in `src/preload/index.js`.
+
+Add to your `package.json`:
+```json
+{
+  "main": "build/main.js",
+  "build": {
+    "files": [
+      "build/**/*"
+    ]
+  },
+  "scripts": {
+    "start": "concurrently -k \"build-electron -d\" \"wait-on public/.build-electron-done && electron .\"",
+    "build": "build-electron"
+  }
+```
+
+Optionally add your frontend builder like CRA (see below for example).
+
+Now create a configuration file in your project root `build-electron.config.js`:
+
+```js
+module.exports = {
+  mainEntry: 'src/main/index.js',
+  preloadEntry: 'src/preload/index.js',
+  outDir: 'build',
+  mainTarget: 'electron16.0-main',
+  preloadTarget: 'electron16.0-preload',
+}
+```
+
+Now you can start developing:
+```bash
+npm run start
+```
+
+And to build your production app:
+```bash
+npm run build && npm exec electron-builder --mac
+```
+
+## Using with Create React App
 
 In this example we will use CRA and [electron-builder](https://www.electron.build/), although it should work fine with any other framework too.
 
@@ -27,7 +74,7 @@ cd my-awesome-app
 yarn add -D build-electron electron electron-builder concurrently wait-on
 ```
 
-Now let's create the project structure. The relevant structure for our CRA app will be like this:
+Now let's create the project structure. Because CRA uses a particular directory structure (and `src` is reserved for the frontend source), we have to adapt to that. The relevant structure will be like this:
 ```
 📁 my-awesome-app
   📁 src-main
@@ -94,7 +141,6 @@ Add to `.gitignore`:
 ```
 
 Now you can start developing:
-
 ```bash
 npm run start
 ```

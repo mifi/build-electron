@@ -6,6 +6,9 @@
   "bin": {
     "build-electron": "cli.js"
   },
+  "scripts": {
+    "test": "exit 0"
+  },
   "author": "Mikael Finstad <finstaden@gmail.com>",
   "repository": "mifi/build-electron",
   "license": "MIT",

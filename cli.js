@@ -4,6 +4,7 @@ import meow from 'meow';
 import assert from 'assert';
 import { unlink, writeFile, mkdir } from 'fs/promises';
 import { isAbsolute, join } from 'path';
+import { pathToFileURL } from 'url';
 
 const cli = meow(`
 	Usage
@@ -24,7 +25,8 @@ const {
 
 const resolvePath = (path) => isAbsolute(path) ? path : join(projectRoot, path)
 
-const config = (await import(resolvePath(configPath))).default;
+// https://github.com/okonet/lint-staged/issues/1054
+const config = (await import(pathToFileURL(resolvePath(configPath)).toString())).default;
 
 const {
   mainEntry,

@@ -201,6 +201,7 @@ import 'source-map-support/register';
 - https://github.com/electron-userland/electron-compile **unmaintained**.
 - https://github.com/electron-userland/electron-webpack - Somewhat outdated and **unmaintained**.
 - Using [Vite](https://vitejs.dev/) instead of Webpack, however Vite is less popular and I've experienced issues with some npm modules. As Webpack is the de-facto standard way of building Javascript and used by so many developers, it was the best choice.
+- https://github.com/vercel/ncc - Similar philosophy but [doesn't seem to work in electron](https://github.com/vercel/ncc/issues/539)
 
 ## Development
 

@@ -62,6 +62,9 @@ const commonConfig = {
   devtool: 'inline-source-map', // todo prod https://webpack.js.org/configuration/devtool/
 };
 
+const resolveConfig = {
+  extensions: ['.js', '.mjs', '.json', '.wasm'],
+};
 
 export const getMainConfig = ({ entry, extraEntries, target }) => ({
   ...commonConfig,
@@ -75,6 +78,7 @@ export const getMainConfig = ({ entry, extraEntries, target }) => ({
     filename: '[name].js',
     chunkFormat: 'commonjs',
   },
+  resolve: resolveConfig,
   ...customConfig,
   ...customMainConfig,
 });
@@ -91,6 +95,7 @@ export const getPreloadConfig = ({ entry, extraEntries, target }) => ({
     filename: '[name].js',
     chunkFormat: 'commonjs',
   },
+  resolve: resolveConfig,
   ...customConfig,
   ...customPreloadConfig,
 });

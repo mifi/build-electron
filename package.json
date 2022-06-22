@@ -1,7 +1,7 @@
 {
   "name": "build-electron",
   "description": "A simple build tool for Electron main/preload code",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "index.js",
   "bin": {
     "build-electron": "cli.js"

@@ -2,7 +2,7 @@
 
 Use ES modules in Electron now!
 
-`build-electron` is a simple build tool for **main** and **preload** code of your Electron app, so you don't have to setup a webpack build system yourself. The aim is to make it easier to get started building Electron apps, like it used to be. Note that **`build-electron` is not a boilerplate**.
+`build-electron` is a simple build tool for **main** and **preload** code of your Electron app, so you don't have to setup a webpack build system yourself. The aim is to make it easier to get started building Electron apps, like it used to be. Note that **`build-electron` is not a boilerplate**. It is a build tool kind of like Create React App or Vite, but for your Electron code.
 
 ## Background
 
@@ -17,7 +17,7 @@ Because [Electron does not support ES Modules](https://github.com/electron/elect
 
 ## How to use
 
-Note that this project provides **Node.js code building only** (main, preload) - not renderer code due to there being so many different languages and frameworks for that, and there are already excellent tools for building those. For React based Electron apps, I recommend pairing with [Create React App (CRA)](https://github.com/facebook/create-react-app).
+Note that this project provides **Node.js code building only** (main, preload) - not renderer code due to there being so many different languages and frameworks for that, and there are already excellent tools for building those. For React based Electron apps, I recommend pairing with [Vite](https://vitejs.dev/) or [Create React App (CRA)](https://github.com/facebook/create-react-app).
 
 ```bash
 yarn add -D build-electron concurrently wait-on
@@ -168,6 +168,25 @@ And to build your production app:
 ```bash
 npm run build && npm exec electron-builder --mac
 ```
+
+## Using with Vite
+
+I have successfully ported projects from Create React App to Vite. It's quite easy and usually involves:
+
+- `package.json` `scripts.build` replace `react-scripts build` with: `vite build --outDir vite-dist`
+- `package.json` `scripts.start` replace `react-scripts start` with: `vite dev`
+- `package.json` `build.extraMetadata.main` replace `build/main.js` with `vite-dist/main.js`
+- `package.json` `build.extraMetadata.files` replace `build/**/*` with `vite-dist/**/*`
+
+Add to `.gitignore`:
+```
+/vite-dist
+/dist
+/icon-build
+/public
+```
+
+TODO: show Vite example.
 
 ## `build-electron.config.js` options
 

@@ -235,6 +235,7 @@ import 'source-map-support/register';
 
 ## Alternatives / inspiration
 
+- https://github.com/alex8088/electron-vite
 - https://github.com/cawa-93/vite-electron-builder - High maintenance to keep up-to-date with boilerplates.
 - https://github.com/electron-userland/electron-compile **unmaintained**.
 - https://github.com/electron-userland/electron-webpack - Somewhat outdated and **unmaintained**.

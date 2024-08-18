@@ -1,5 +1,7 @@
 # build-electron [![Test](https://github.com/mifi/build-electron/actions/workflows/test.yml/badge.svg)](https://github.com/mifi/build-electron/actions/workflows/test.yml)
 
+**Note!** No longer maintained! Use something like [`electron-vite`](https://github.com/alex8088/electron-vite) instead.
+
 Use ES modules in Electron now!
 
 `build-electron` is a simple build tool for **main** and **preload** code of your Electron app, so you don't have to setup a webpack build system yourself. The aim is to make it easier to get started building Electron apps, like it used to be. Note that **`build-electron` is not a boilerplate**. It is a build tool kind of like Create React App or Vite, but for your Electron code.
